@@ -33,7 +33,8 @@ public class CapeController : MonoBehaviour {
             if(Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
                 dialogController.ActivateDialog("Tengo la capa de Ramonchu!");                  
-                playerController.hasCape = true;                                              
+                playerController.hasCape = true;
+                gameObject.SetActive(false);
             }
         }
         else if(dist >= 1.5f && capeBubble.enabled)
