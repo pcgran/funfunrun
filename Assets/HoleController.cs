@@ -23,27 +23,22 @@ public class HoleController : MonoBehaviour {
         dialogController = dialogFrame.GetComponent<DialogController>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-        var dist = Vector2.Distance(this.transform.position, player.transform.position);
-        if(dist < 0.3)
+	private void OnTriggerEnter2D(Collider2D collision)
+    {
+        dialogController.ActivateDialog("Has caído por un agujero y has muerto. Vuelve a intentarlo!");
+        playerController.hasCassette = false;
+        playerController.hasCape = false;
+        playerController.cassetteDelivered = false;
+        playerController.capeDelivered = false;
+        player.transform.position = playerController.startPosition;
+        cassetteController.hasCassette = true;
+        cape.SetActive(true);
+        ramonchuAnimator.SetBool("cape_delivered", false);
+
+        foreach (Transform rubbish in rubbishParent.transform)
         {
-            dialogController.ActivateDialog("Has caído por un agujero y has muerto. Vuelve a intentarlo!");            
-            playerController.hasCassette = false;
-            playerController.hasCape = false;
-            playerController.cassetteDelivered = false;
-            playerController.capeDelivered = false;
-            player.transform.position = playerController.startPosition;
-            cassetteController.hasCassette = true;
-            cape.SetActive(true);
-            ramonchuAnimator.SetBool("cape_delivered", false);
-
-            foreach (Transform rubbish in rubbishParent.transform)
-            {
-                var casseteController = rubbish.gameObject.GetComponent<CassetteController>();
-                casseteController.updateSpriteToClosed();
-            }
-
+            var casseteController = rubbish.gameObject.GetComponent<CassetteController>();
+            casseteController.updateSpriteToClosed();
         }
     }
 }
